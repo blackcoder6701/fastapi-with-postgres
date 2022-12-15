@@ -3,12 +3,25 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
+import os
+from dotenv import load
 from alembic import context
 
+load()
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
+section=config.config_ini_section
+DRIVER=os.getenv("DB_DRIVER")
+DB_DRIVER=os.getenv("DB_DRIVER")
+DB_username=os.getenv("DB_username")
+DB_password=os.getenv("DB_password")
+DB_HOST=os.getenv("DB_HOST")
+DB_name=os.getenv("DB_name")
+DB_port=os.getenv("DB_port")
+SQLALCHEMY_URL=f'{DRIVER}://{DB_username}:{DB_password}@{DB_HOST}:{DB_port}/{DB_username}'
+config.set_section_option(section, "sqlalchemy.url", SQLALCHEMY_URL)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:

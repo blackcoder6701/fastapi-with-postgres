@@ -14,9 +14,9 @@ class User(Base):
     created_by=Column(String)
     updated_at=Column(Integer)
     updated_by=Column(String)
-    
-    
-    
+
+
+
 class Competition(Base):
     __tablename__='competitions'
     id=Column(Integer,primary_key=True)
@@ -27,8 +27,8 @@ class Competition(Base):
     created_at=Column(Integer)
     updated_at=Column(Integer)
     user_id=Column(Integer)
-    
-    
+
+
 class Entry(Base):
     __tablename__='Entry'
     id=Column(Integer,primary_key=True)
@@ -39,4 +39,4 @@ class Entry(Base):
     is_deleted=Column(Boolean)
     created_at=Column(Integer)
     updated_at=Column(Integer)
-    comp_id=Column(Integer) 
+    comp_id=Column(Integer)

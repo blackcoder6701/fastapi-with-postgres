@@ -1,7 +1,7 @@
 """current Revision
 
 Revision ID: 6649a12a83e1
-Revises: 
+Revises:
 Create Date: 2022-12-12 10:35:24.466815
 
 """
