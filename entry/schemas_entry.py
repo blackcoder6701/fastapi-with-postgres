@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from utils.temp_schemas import Temp
 
 #creating the schemas for the Entry table
-
 class Entries(BaseModel,Temp):
     id : int
     name : str

@@ -7,7 +7,7 @@ from utils.temp_schemas import Temp
 #creating the schemas for the Competitions
 
 class Competitions(BaseModel,Temp):
-    """_summary_
+    """schema for the comp's
 
     Args:
         BaseModel (_type_): _description_

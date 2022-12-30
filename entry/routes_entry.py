@@ -1,19 +1,17 @@
 from fastapi import APIRouter,Depends
-from pydantic import BaseModel
-from typing import List
 from database import SessionLocal
 from entry.schemas_entry import Entries
 from entry.models_entry import  Entry
 from competitions.models_comp import Competition
+from sqlalchemy.orm import Session
+from utils.db import get_db
 
 entryRouter = APIRouter()
 
-db = SessionLocal()
-
 #creating the routes for the entry table
 @entryRouter.get('/entry')
-def entries_homepage():
-    """_summary_
+def entries_homepage(db: Session = Depends(get_db)):
+    """getting all entries
 
     Returns:
         _type_: _description_
@@ -22,8 +20,8 @@ def entries_homepage():
     return list_of_entry
 
 @entryRouter.get('/entry/{entry_id}')
-def competitons_id(entry_id:int):
-    """_summary_
+def competitons_id(entry_id : int,db: Session = Depends(get_db)):
+    """for getting the entry details according to id
 
     Args:
         entry_id (int): _description_
@@ -31,15 +29,12 @@ def competitons_id(entry_id:int):
     Returns:
         _type_: _description_
     """
-
     desired_item = db.query(Entry).filter(Entry.id == entry_id).first()
-
     return desired_item
 
-
 @entryRouter.post('/entries',response_model=Entries,status_code=201)
-def post_entries(entry:Entries):
-    """_summary_
+def post_entries(entry:Entries,db: Session = Depends(get_db)):
+    """for posting the details
 
     Args:
         entry (Entries): _description_
@@ -58,14 +53,11 @@ def post_entries(entry:Entries):
 
     db.add(new_entry)
     db.commit()
-
     return new_entry
 
-
 @entryRouter.put('/entry/{entry_id}')
-def put_update(entry_id:int,entry:Entries):
-    """_summary_
-
+def put_update(entry_id : int,entry : Entries,db: Session = Depends(get_db)):
+    """for the changes in particular entry
     Args:
         entry_id (int): _description_
         entry (Entries): _description_
@@ -80,13 +72,11 @@ def put_update(entry_id:int,entry:Entries):
     update.comp_id = entry.comp_id
 
     db.commit()
-
     return update
 
-
 @entryRouter.delete('/entry/{entry_id}')
-def delete_compe(entry_id:int):
-    """_summary_
+def delete_compe(entry_id:int,db: Session = Depends(get_db)):
+    """for the deltion of the entry
 
     Args:
         entry_id (int): _description_
@@ -100,10 +90,9 @@ def delete_compe(entry_id:int):
     print(delete_id)
     return delete_id
 
-
 @entryRouter.get('/entry/{user_id}/count')
-def count_user(user_id:int):
-    """_summary_
+def count_user(user_id:int,db: Session = Depends(get_db)):
+    """for getting the count
 
     Args:
         user_id (int): _description_
@@ -111,7 +100,6 @@ def count_user(user_id:int):
     Returns:
         _type_: _description_
     """
-
     competitions = db.query(Competition.id).filter(Competition.user_id == user_id).all()
     # return competitons
 
@@ -121,6 +109,5 @@ def count_user(user_id:int):
     final_ans= 0
     for competition_id in competitons_id:
         entry = db.query(Entry.id).filter(Entry.comp_id==competition_id).count()
-
         final_ans += entry
     return final_ans

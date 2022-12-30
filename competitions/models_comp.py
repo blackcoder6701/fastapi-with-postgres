@@ -1,14 +1,12 @@
 from database import Base
-from sqlalchemy import Column,String,Integer,Boolean,ForeignKey
-from users.models_users import User
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
 from utils.temp_models import Common_class
 
 #creating the model for the competition
 #here the id --> primary key
 #here the user_id  --> foreign key (it refers the user table)
-
 class Competition(Base,Common_class):
-    """_summary_
+    """cerating the class for the competitions
 
     Args:
         Base (_type_): _description_

@@ -1,10 +1,8 @@
-from database import Base,engine
-from models import User,Competition,Entry
-
+from database import Base, engine
+from entry.models_entry import  Entry
+from competitions.models_comp import Competition
+from users.models_users import User
 
 Base.metadata.create_all(engine)
 
-
-
-print("hold your breath ")
 print("creating the database...")
